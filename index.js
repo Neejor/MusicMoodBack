@@ -1,9 +1,11 @@
+const axios = require("axios");
 const express = require("express"); //express framework to have a higher level of methods
 const app = express(); //assign app variable the express class/method
 const cors = require("cors");
 app.use(cors());
 app.use(express.json());
-
+const accessToken =
+  "BQC8GJ_3U5AptxmgtqyjsCaoW-P13XTvgGtvVmCifRCypcgPWOdOhN335U7p5WqZQAwE-ouzy8gX6y7WvtOfTSdufseOicL9UenEggO-ADBBR-Dgy-rkmg68zyh1LJW6Cl6Bco6ViHiNXHA177VbuZBExvSxLkf-krAZxf7qbBWjduM";
 const { spawn } = require("child_process");
 
 const child = spawn("cmd");
@@ -31,6 +33,28 @@ const returnString = (e) => {
 child.stdout.on("data", (data) => {
   var x;
   if (data[0] == 91) x = returnString(data);
+
+  axios
+    .get(
+      "https://api.spotify.com/v1/search",
+      {
+        params: {
+          limit: 50,
+          offset: Math.floor(Math.random() * 60),
+          q: "jazz",
+          type: "track",
+        },
+      },
+      {
+        headers: {
+          Accept: "application/json",
+          Authorization: "Bearer " + accessToken,
+          "Content-Type": "application/json",
+        },
+      }
+    )
+    .then((data) => console.log(data))
+    .catch((err) => console.log(err));
   // console.log(`child stdoutData:\n${data}`);
 });
 
