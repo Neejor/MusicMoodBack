@@ -10,6 +10,9 @@ const child = spawn("cmd");
 
 child.stdin.setEncoding("utf-8");
 // child.stdout.pipe(process.stdout);
+child.stdin.write("d:\n");
+child.stdin.write(""); //Location
+child.stdin.write(`ipython -c "%run <notebook>.ipynb"\n`);
 
 child.on("exit", function (code, signal) {
   console.log(
