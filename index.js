@@ -7,7 +7,7 @@ app.use(express.json());
 const { spawn } = require("child_process");
 
 const child = spawn("cmd");
-
+//Hello Neejor
 child.stdin.setEncoding("utf-8");
 // child.stdout.pipe(process.stdout);
 child.stdin.write("d:\n");
