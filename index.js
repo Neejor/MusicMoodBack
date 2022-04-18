@@ -119,8 +119,16 @@ const returnPlaylist = async (playlist, mood) => {
     //   }
     // })
 
+    let userId = await axiosCust.get("https://api.spotify.com/v1/me", {
+      headers: {
+        Accept: "application/json",
+        Authorization: "Bearer " + accessToken,
+        "Content-Type": "application/json",
+      },
+    });
+
     let playlistId = await axiosCust.post(
-      "https://api.spotify.com/v1/users/cg22w/playlists",
+      `https://api.spotify.com/v1/users/${userId.data.id}/playlists`,
       JSON.stringify(data),
       {
         headers: {
@@ -292,7 +300,7 @@ app.get("/acc", (req, res) => {
     .then((resD) => {
       accessToken = resD.data.access_token;
       console.log(accessToken);
-      res.redirect("http://localhost:3000?getAT=true");
+      res.redirect("http://localhost:3000");
     });
 });
 
@@ -340,16 +348,12 @@ app.get("/getSongs", (req, res) => {
 
 app.post("/getPlaylists", (req, res) => {
   console.log(req.body.transcript);
-  fs.writeFile(
-    "D:\\WebDev\\Untitled Folder\\no.txt",
-    req.body.transcript,
-    (err, data) => {
-      if (err) throw err;
-      child.stdin.write("d:\n");
-      child.stdin.write("cd musicfiles\n"); //Location
-      child.stdin.write(`ipython -c "%run model_use.ipynb"\n`);
-    }
-  );
+  fs.writeFile("D:\\musicfiles\\no.txt", req.body.transcript, (err, data) => {
+    if (err) throw err;
+    child.stdin.write("d:\n");
+    child.stdin.write("cd musicfiles\n"); //Location
+    child.stdin.write(`ipython -c "%run model_use.ipynb"\n`);
+  });
 
   res.send("S");
 });
