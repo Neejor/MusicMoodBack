@@ -49,6 +49,8 @@ child.stdin.setEncoding("utf-8");
 let moodMap = new Map();
 moodMap.set("joy", ["pop", "rock"]);
 moodMap.set("sadness", ["indie", "jazz"]);
+moodMap.set("love", ["soul", "blues"]);
+moodMap.set("anger", ["metal", "rock"]);
 
 const returnString = (e) => {
   x = "";
